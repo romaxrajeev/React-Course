@@ -5,6 +5,7 @@ import { Card, CardImg, CardBody, CardText } from 'reactstrap';
 class DishDetail extends Component{
     constructor(props){
         super(props);
+        console.log(this.props.selectedDish);
     }
 
     renderComments(comments){
@@ -18,7 +19,7 @@ class DishDetail extends Component{
                 <li key= {comment.id}>
                     {comment.comment}
                     <br /><br />
-                    -- {comment.author} , {comment.date}
+                    -- {comment.author} , {new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short', day:'2-digit'}).format(new Date(Date.parse(comment.date))) }
                     <br /><br />
                 </li>
             );
@@ -42,20 +43,21 @@ class DishDetail extends Component{
         }
         console.log(this.props.selectedDish);
         return(
-                <div className="row">
-                    <div className="col-12 col-md-5 m-1">
-                        <Card>
-                            <CardImg width="100%" src={this.props.selectedDish.image} alt={this.props.selectedDish.name} /> 
-                            <CardBody>
-                                <CardText>
-                                    {this.props.selectedDish.description}
-                                </CardText>
-                            </CardBody>
-                        </Card>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-12 col-md-5 m-1">
+                            <Card>
+                                <CardImg width="100%" src={this.props.selectedDish.image} alt={this.props.selectedDish.name} /> 
+                                <CardBody>
+                                    <CardText>
+                                        {this.props.selectedDish.description}
+                                    </CardText>
+                                </CardBody>
+                            </Card>
+                        </div>
+                        {this.renderComments(this.props.selectedDish.comments)}
                     </div>
-                    {this.renderComments(this.props.selectedDish.comments)}
                 </div>
-                
         );
     }
 }
