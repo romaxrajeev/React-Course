@@ -43,7 +43,7 @@ class DishDetail extends Component{
         }
         console.log(this.props.selectedDish);
         return(
-                <div className="container">
+                <React.Fragment>
                     <div className="row">
                         <div className="col-12 col-md-5 m-1">
                             <Card>
@@ -57,7 +57,7 @@ class DishDetail extends Component{
                         </div>
                         {this.renderComments(this.props.selectedDish.comments)}
                     </div>
-                </div>
+                </React.Fragment>
         );
     }
 }
