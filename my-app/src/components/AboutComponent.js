@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 function RenderLeader({leaders}){
     const leaderDetails = leaders.map((leader) => {
         return (
-            <div key={leader.id} className="mt-5">
+            <div key={leader.id} className="mt-5 ">
                 <Media tag="li">
                 <Media right middle>
                     <Media object src={leader.image} alt={leader.name} />
