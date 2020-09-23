@@ -25,8 +25,9 @@ class CommentForm extends Component {
     }
 
     handleSubmit(values){
-        console.log("Current state is: "+JSON.stringify(values));
-        alert("Current state is: "+JSON.stringify(values));
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+        alert("Added");
+        this.toggleModal();
     }
 
     render() {
@@ -85,7 +86,7 @@ class CommentForm extends Component {
 
 }
 
-function RenderComments({comments}){
+function RenderComments({comments , addComment, dishId}){
     if(comments == null){
         return(
             <div>No Comments</div>
@@ -108,7 +109,7 @@ function RenderComments({comments}){
             <ul className="list-unstyled">
                 { allComments }
             </ul>
-            <CommentForm />
+            <CommentForm dishId={dishId} addComment={addComment} />
             </React.Fragment>
     );
 }
@@ -148,7 +149,10 @@ function DishDetail(props){
                 <RenderDish dish={props.selectedDish} />
                 </div>
                 <div className="col-12 col-md-5 m-1">
-                <RenderComments comments={props.comments} />
+                <RenderComments comments={props.comments}
+                addComment ={props.addComment}
+                dishId={props.selectedDish.id}
+                />
                 </div>
             </div>
         </div>
