@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Card, CardImg, CardBody, CardText, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import Loading from './LoadingComponent';
 import { Modal, ModalBody, Button, ModalHeader, Row, Label, Col} from 'reactstrap';
 import {Control, LocalForm, Errors} from 'react-redux-form';
 
@@ -114,13 +115,30 @@ function RenderComments({comments , addComment, dishId}){
     );
 }
 
-function RenderDish({dish}){
-    if(dish == null){
+function RenderDish({dish, isLoading, errMess}){
+    if(isLoading){
+        return(
+            <div className="container">
+                <div className="row">
+                    <Loading />
+                </div>
+            </div>
+        );
+    }
+    else if(errMess) {
+        return(
+            <div className="container">
+                <div className="row">
+                    <h4>{errMess}</h4>
+                </div>
+            </div>
+        );
+    }
+    else if(dish == null){
         return(
             <div></div>
         );
     }
-    console.log(dish);
     return(
             
                <Card>
@@ -146,7 +164,7 @@ function DishDetail(props){
             </Breadcrumb>
             <div className="row">      
                 <div className="col-12 col-md-5 m-1">          
-                <RenderDish dish={props.selectedDish} />
+                <RenderDish dish={props.selectedDish} isLoading={props.isLoading} errMess={props.errMess} />
                 </div>
                 <div className="col-12 col-md-5 m-1">
                 <RenderComments comments={props.comments}
