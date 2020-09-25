@@ -5,6 +5,7 @@ import Loading from './LoadingComponent';
 import { Modal, ModalBody, Button, ModalHeader, Row, Label, Col} from 'reactstrap';
 import {Control, LocalForm, Errors} from 'react-redux-form';
 import { baseUrl } from '../shared/baseUrl';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -97,19 +98,23 @@ function RenderComments({comments , postComment, dishId}){
     console.log(comments[0]);
     const allComments = comments.map((comment) => {
         return(
+            <Fade in>
             <li key= {comment.id}>
                 {comment.comment}
                 <br /><br />
                 -- {comment.author} , {new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short', day:'2-digit'}).format(new Date(Date.parse(comment.date))) }
                 <br /><br />
             </li>
+            </Fade>
         );
     });
     return(
             <React.Fragment>
             <h4>Comments</h4>
             <ul className="list-unstyled">
+                <Stagger in>
                 { allComments }
+                </Stagger>
             </ul>
             <CommentForm dishId={dishId} postComment={postComment} />
             </React.Fragment>
@@ -141,7 +146,11 @@ function RenderDish({dish, isLoading, errMess}){
         );
     }
     return(
-            
+        <FadeTransform
+        in
+        transformProps={{
+            exitTransform: 'scale(0.5) translateY(-50%)'
+        }}>
                <Card>
                     <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} /> 
                     <CardBody>
@@ -150,7 +159,7 @@ function RenderDish({dish, isLoading, errMess}){
                         </CardText>
                     </CardBody>
                 </Card>
-            
+        </FadeTransform>    
     );
 }
 
